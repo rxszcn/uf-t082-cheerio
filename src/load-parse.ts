@@ -1,10 +1,10 @@
-import renderWithHtmlparser2 from 'dom-serializer';
 import type { AnyNode } from 'domhandler';
 import { parseDocument as parseWithHtmlparser2 } from 'htmlparser2';
 import { type CheerioAPI, getLoad } from './load.js';
 import type { CheerioOptions } from './options.js';
 import { getParse } from './parse.js';
 import { parseWithParse5, renderWithParse5 } from './parsers/parse5-adapter.js';
+import { renderDom } from './serializer.js';
 
 const parse = getParse((content, options, isDocument, context) =>
   options._useHtmlParser2
@@ -33,7 +33,5 @@ export const load: (
   options?: CheerioOptions | null,
   isDocument?: boolean,
 ) => CheerioAPI = getLoad(parse, (dom, options) =>
-  options._useHtmlParser2
-    ? renderWithHtmlparser2(dom, options)
-    : renderWithParse5(dom),
+  options._useHtmlParser2 ? renderDom(dom, options) : renderWithParse5(dom),
 );

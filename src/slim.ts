@@ -3,12 +3,12 @@
  *   way, parse5 won't be loaded, saving some memory.
  */
 
-import render from 'dom-serializer';
 import type { AnyNode } from 'domhandler';
 import { parseDocument } from 'htmlparser2';
 import { type CheerioAPI, getLoad } from './load.js';
 import type { CheerioOptions } from './options.js';
 import { getParse } from './parse.js';
+import { renderDom } from './serializer.js';
 
 export type { Cheerio } from './cheerio.js';
 export type {
@@ -37,4 +37,4 @@ export const load: (
   content: string | AnyNode | AnyNode[] | Buffer,
   options?: CheerioOptions | null,
   isDocument?: boolean,
-) => CheerioAPI = getLoad(getParse(parseDocument), render);
+) => CheerioAPI = getLoad(getParse(parseDocument), renderDom);
